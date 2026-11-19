@@ -11,7 +11,7 @@ const facts = [
 
 export function Platform() {
   return (
-    <section id="plataforma" aria-labelledby="plataforma-title" className="bg-surface pt-20 sm:pt-24 lg:pt-32">
+    <section id="plataforma" aria-labelledby="plataforma-title" className="bg-surface pt-16 sm:pt-24 lg:pt-32">
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">

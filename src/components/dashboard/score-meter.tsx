@@ -25,14 +25,16 @@ export function ScoreMeter({
         {marker}
         <p className="text-[13px] font-medium text-muted">{label}</p>
       </div>
-      <div className="mt-3 flex items-baseline gap-1.5">
-        <span className="text-5xl leading-none font-semibold tracking-[-0.03em] text-navy">{clamped}</span>
-        <span className="text-sm font-medium text-muted">em 100</span>
+      <div className="mt-3 flex flex-wrap items-end justify-between gap-x-3 gap-y-3 @lg:flex-col @lg:items-start @lg:justify-start">
+        <div className="flex items-baseline gap-1.5">
+          <span className="text-5xl leading-none font-semibold tracking-[-0.03em] text-navy">{clamped}</span>
+          <span className="text-sm font-medium text-muted">em 100</span>
+        </div>
+        <p className="inline-flex w-fit items-center gap-1.5 rounded-md bg-mist px-2 py-1 text-xs font-semibold text-navy">
+          <span aria-hidden="true" className="size-1.5 rounded-full bg-navy" />
+          {qualifier}
+        </p>
       </div>
-      <p className="mt-3 inline-flex w-fit items-center gap-1.5 rounded-md bg-mist px-2 py-1 text-xs font-semibold text-navy">
-        <span aria-hidden="true" className="size-1.5 rounded-full bg-navy" />
-        {qualifier}
-      </p>
       <div
         role="meter"
         aria-label={label}

@@ -27,7 +27,7 @@ const outcomes: ReadonlyArray<{ title: string; description: string; icon: Lucide
 export function Impact() {
   return (
     <Section id="impacto" tone="surface" aria-labelledby="impacto-title">
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-32">
             <Eyebrow>Impacto</Eyebrow>
@@ -40,7 +40,7 @@ export function Impact() {
             </Lead>
             <aside
               aria-label="Nota sobre os resultados"
-              className="mt-8 flex gap-3 rounded-xl border border-line bg-white p-5 text-sm leading-relaxed text-muted"
+              className="mt-6 flex gap-3 rounded-xl border border-line bg-white p-4 text-sm leading-relaxed text-muted sm:mt-8 sm:p-5"
             >
               <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-steel" />
               <p>
@@ -56,13 +56,13 @@ export function Impact() {
           {outcomes.map((outcome) => {
             const Icon = outcome.icon;
             return (
-              <li key={outcome.title} className="flex gap-6 py-8 sm:gap-8 sm:py-10">
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-line bg-white text-navy shadow-card">
+              <li key={outcome.title} className="flex gap-4 py-6 sm:gap-8 sm:py-10">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-line bg-white text-navy shadow-card sm:size-12">
                   <Icon aria-hidden="true" className="size-5" strokeWidth={1.75} />
                 </span>
                 <div>
-                  <h3 className="text-xl font-semibold tracking-[-0.015em] text-navy sm:text-2xl">{outcome.title}</h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-muted sm:text-base">{outcome.description}</p>
+                  <h3 className="text-lg leading-snug font-semibold tracking-[-0.015em] text-navy sm:text-2xl">{outcome.title}</h3>
+                  <p className="mt-1.5 text-[15px] leading-relaxed text-muted sm:mt-2 sm:text-base">{outcome.description}</p>
                 </div>
               </li>
             );

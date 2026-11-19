@@ -23,18 +23,18 @@ export function Hero() {
 
           <h1
             id="hero-title"
-            className="mt-7 text-[2.375rem] leading-[1.07] font-semibold tracking-[-0.035em] text-navy sm:text-5xl lg:text-[3.25rem] xl:text-[2.9375rem]"
+            className="mt-6 text-[clamp(2rem,10vw,2.375rem)] leading-[1.07] font-semibold tracking-[-0.035em] text-navy sm:text-5xl lg:text-[3.25rem] xl:text-[2.9375rem]"
           >
             Todas as empresas têm potencial.{" "}
             <span className="text-steel">Nem todas conseguem identificá-lo.</span>
           </h1>
 
-          <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:mt-7 sm:text-lg">
             O PORTUGAL POTENTIAL 2030 pretende ajudar as empresas portuguesas a descobrir oportunidades
             escondidas, transformar informação em decisões e converter potencial em crescimento.
           </p>
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <div data-bar-start className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row">
             <ButtonLink href="#plataforma" size="lg" withArrow>
               Descobrir a Plataforma
             </ButtonLink>
@@ -43,7 +43,7 @@ export function Hero() {
             </ButtonLink>
           </div>
 
-          <p className="mt-12 max-w-xl border-t border-line pt-6 text-sm leading-relaxed font-medium text-steel">
+          <p className="mt-10 max-w-xl border-t border-line pt-6 text-sm sm:mt-12 leading-relaxed font-medium text-steel">
             Diagnóstico empresarial. Decisões mais inteligentes. Crescimento sustentável.
           </p>
         </div>

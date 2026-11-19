@@ -61,6 +61,19 @@ src/
 - Qualquer visualização com dados fictícios usa `isDemo: true` e mostra a etiqueta **Exemplo demonstrativo**.
 - Os impactos são apresentados como resultados pretendidos, não comprovados.
 
+## Experiência móvel
+
+Pensada primeiro para o telemóvel, sem alterar o desktop:
+
+- **Barra de secções** ao alcance do polegar (telemóvel e tablet): mostra a secção atual, o progresso de leitura e abre o índice de secções. Aparece depois do início e esconde-se no fim da página.
+- **Índice de secções** em ecrã inteiro, com a secção atual assinalada ("Está aqui").
+- **Quatro dimensões em carrossel** com deslize e paragem em cada cartão, mais um seletor A–D. A partir de 640 px volta a ser grelha.
+- **Blocos compactos** no telemóvel (desafio, impacto, perguntas, módulos da plataforma) para reduzir o scroll; o mais importante aparece primeiro.
+- **Áreas de toque de 44 px** em ecrãs táteis (detetadas pelo tipo de ponteiro, não pela largura), título do início com tamanho fluido.
+- **Ecrãs com entalhe** (`viewport-fit=cover` e áreas seguras), ícone para o ecrã principal e manifesto da aplicação.
+
+Verificado com Playwright a 320, 360, 390 e 414 px, em modo horizontal e em tablet: sem scroll horizontal e sem alvos de toque abaixo do mínimo.
+
 ## Próximas fases
 
 A arquitetura está preparada para os módulos previstos (ver `src/lib/platform-modules.ts`, com rotas reservadas em `/plataforma/*`):

@@ -39,7 +39,7 @@ const challenges: ReadonlyArray<{
 export function Challenge() {
   return (
     <Section id="desafio" aria-labelledby="desafio-title" className="border-t border-line">
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-32">
             <Eyebrow>O desafio</Eyebrow>
@@ -61,17 +61,21 @@ export function Challenge() {
             return (
               <li
                 key={challenge.title}
-                className="group flex flex-col bg-white p-7 transition-colors duration-300 hover:bg-surface/70 sm:p-8"
+                className="group flex gap-4 bg-white p-5 transition-colors duration-300 hover:bg-surface/70 sm:flex-col sm:gap-0 sm:p-8"
               >
-                <span className="flex size-11 items-center justify-center rounded-xl bg-mist text-navy">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-mist text-navy sm:size-11">
                   <Icon aria-hidden="true" className="size-5" strokeWidth={1.75} />
                 </span>
-                <h3 className="mt-8 text-lg font-semibold tracking-[-0.01em] text-ink">{challenge.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-muted">{challenge.description}</p>
-                <p className="mt-auto flex items-center gap-2 pt-8 text-xs font-medium text-steel">
-                  <QuadrantGlyph active={getDimensionIndex(challenge.dimension)} className="size-3.5" />
-                  Analisado na Dimensão {dimension.letter} · {dimension.shortTitle}
-                </p>
+                <div className="flex min-w-0 flex-1 flex-col sm:mt-8">
+                  <h3 className="text-base font-semibold tracking-[-0.01em] text-ink sm:text-lg">{challenge.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted sm:mt-2 sm:text-[15px]">
+                    {challenge.description}
+                  </p>
+                  <p className="mt-3 flex items-center gap-2 text-xs font-medium text-steel sm:mt-auto sm:pt-8">
+                    <QuadrantGlyph active={getDimensionIndex(challenge.dimension)} className="size-3.5" />
+                    Analisado na Dimensão {dimension.letter} · {dimension.shortTitle}
+                  </p>
+                </div>
               </li>
             );
           })}

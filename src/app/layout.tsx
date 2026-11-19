@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { SiteChrome } from "@/components/layout/site-chrome";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -18,6 +18,14 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  appleWebApp: {
+    capable: true,
+    title: "PP 2030",
+    statusBarStyle: "default",
+  },
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
@@ -29,6 +37,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
+  // Ocupa todo o ecrã em telemóveis com entalhe; as margens respeitam as áreas seguras.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -37,15 +47,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-dvh flex-col">
         <a
           href="#conteudo"
-          className="sr-only z-[60] rounded-lg bg-navy px-4 py-2 text-sm font-medium text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="sr-only z-[60] rounded-lg bg-navy text-sm font-medium text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:px-4 focus:py-3"
         >
           Saltar para o conteúdo
         </a>
-        <SiteHeader />
-        <main id="conteudo" tabIndex={-1} className="flex-1 focus:outline-none">
-          {children}
-        </main>
-        <SiteFooter />
+        <SiteChrome>
+          <main id="conteudo" tabIndex={-1} className="flex-1 focus:outline-none">
+            {children}
+          </main>
+          <SiteFooter />
+        </SiteChrome>
       </body>
     </html>
   );

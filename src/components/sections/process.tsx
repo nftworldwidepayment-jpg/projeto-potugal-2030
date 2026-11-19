@@ -24,11 +24,11 @@ export function Process() {
         </Lead>
       </div>
 
-      <ol className="mt-16 grid gap-0 lg:mt-20 lg:grid-cols-4 lg:gap-8">
+      <ol className="mt-12 grid gap-0 sm:mt-16 lg:mt-20 lg:grid-cols-4 lg:gap-8">
         {journeySteps.map((step, i) => {
           const isLast = i === journeySteps.length - 1;
           return (
-            <li key={step.id} className="relative flex gap-6 pb-12 last:pb-0 lg:flex-col lg:gap-0 lg:pb-0">
+            <li key={step.id} className="relative flex gap-5 pb-10 last:pb-0 lg:flex-col lg:gap-0 lg:pb-0">
               {/* Linha de ligação: vertical em móvel, horizontal em desktop */}
               {!isLast && (
                 <>

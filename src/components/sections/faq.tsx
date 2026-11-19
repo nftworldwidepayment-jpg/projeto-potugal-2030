@@ -37,7 +37,7 @@ const questions: ReadonlyArray<{ question: string; answer: string }> = [
 export function Faq() {
   return (
     <Section id="perguntas" aria-labelledby="perguntas-title">
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
           <Eyebrow>Perguntas frequentes</Eyebrow>
           <SectionTitle id="perguntas-title" className="mt-6 lg:text-4xl">
@@ -49,7 +49,7 @@ export function Faq() {
         <div className="divide-y divide-line border-y border-line lg:col-span-8">
           {questions.map((item) => (
             <details key={item.question} className="group">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-semibold text-navy transition-colors hover:text-steel [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-base font-semibold text-navy transition-colors hover:text-steel active:text-steel sm:gap-6 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
                 {item.question}
                 <span
                   aria-hidden="true"
@@ -58,7 +58,7 @@ export function Faq() {
                   <Plus className="size-4" />
                 </span>
               </summary>
-              <p className="max-w-2xl pb-6 text-base leading-relaxed text-muted">{item.answer}</p>
+              <p className="max-w-2xl pr-12 pb-5 text-[15px] leading-relaxed text-muted sm:pb-6 sm:text-base">{item.answer}</p>
             </details>
           ))}
         </div>

@@ -8,7 +8,7 @@ type Size = "md" | "lg";
 
 const base =
   "group inline-flex items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap " +
-  "transition-[background-color,color,box-shadow] duration-200 ease-out " +
+  "transition-[background-color,color,box-shadow,scale] duration-200 ease-out active:scale-[0.98] " +
   "focus-visible:outline-2 focus-visible:outline-offset-2";
 
 const variants: Record<Variant, string> = {

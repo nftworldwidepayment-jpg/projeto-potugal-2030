@@ -30,11 +30,23 @@
 
   --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-grow: grow 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-sheet: sheet 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
 
   @keyframes rise {
     from {
       opacity: 0;
       transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes sheet {
+    from {
+      opacity: 0.6;
+      transform: translateY(8px);
     }
     to {
       opacity: 1;
@@ -96,6 +108,57 @@
   p {
     text-wrap: pretty;
   }
+}
+
+/*
+ * Margem lateral da página. Respeita as áreas seguras dos ecrãs com
+ * entalhe (iPhone em modo horizontal) graças a viewport-fit=cover.
+ */
+:root {
+  --gutter: 1.25rem;
+  --safe-left: max(var(--gutter), env(safe-area-inset-left));
+  --safe-right: max(var(--gutter), env(safe-area-inset-right));
+}
+
+@media (width >= 40rem) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media (width >= 64rem) {
+  :root {
+    --gutter: 2.5rem;
+  }
+}
+
+@utility px-gutter {
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+
+/* Carrossel que ocupa toda a largura do ecrã, alinhado com a margem. */
+@utility carousel-bleed {
+  margin-left: calc(-1 * var(--safe-left));
+  margin-right: calc(-1 * var(--safe-right));
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+  scroll-padding-inline: var(--safe-left) var(--safe-right);
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
 }
 
 @utility bg-grid {

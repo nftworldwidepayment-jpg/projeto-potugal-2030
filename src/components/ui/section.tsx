@@ -17,7 +17,7 @@ export function Section({
   ...props
 }: ComponentProps<"section"> & { tone?: Tone; containerClassName?: string }) {
   return (
-    <section className={cn("py-20 sm:py-24 lg:py-32", tones[tone], className)} {...props}>
+    <section className={cn("py-16 sm:py-24 lg:py-32", tones[tone], className)} {...props}>
       <Container className={containerClassName}>{children}</Container>
     </section>
   );
@@ -27,7 +27,7 @@ export function Eyebrow({ children, className }: { children: ReactNode; classNam
   return (
     <p
       className={cn(
-        "flex items-center gap-3 text-xs font-semibold tracking-[0.16em] text-steel uppercase",
+        "flex items-center gap-3 text-xs font-semibold tracking-[0.12em] text-steel uppercase sm:tracking-[0.16em]",
         className,
       )}
     >

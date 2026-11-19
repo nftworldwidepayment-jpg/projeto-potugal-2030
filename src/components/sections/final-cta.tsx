@@ -4,7 +4,7 @@ import { platformHref } from "@/lib/site";
 
 export function FinalCta() {
   return (
-    <section aria-labelledby="cta-title" className="relative isolate overflow-hidden bg-navy">
+    <section data-page-end aria-labelledby="cta-title" className="relative isolate overflow-hidden bg-navy">
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-grid-inverse [mask-image:radial-gradient(ellipse_60%_80%_at_50%_100%,black_20%,transparent_80%)]"
@@ -21,7 +21,7 @@ export function FinalCta() {
           orientar decisões.
         </p>
         <div className="mt-10 flex justify-center">
-          <ButtonLink href={platformHref} variant="inverse" size="lg" withArrow>
+          <ButtonLink href={platformHref} variant="inverse" size="lg" withArrow className="w-full sm:w-auto">
             Explorar a Plataforma
           </ButtonLink>
         </div>

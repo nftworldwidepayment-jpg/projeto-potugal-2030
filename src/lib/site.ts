@@ -24,7 +24,21 @@ export const mainNav: readonly NavItem[] = [
   { label: "Impacto", href: "/#impacto", sectionId: "impacto" },
 ];
 
+/**
+ * Todas as secções da página inicial, pela ordem em que aparecem.
+ * Usado no índice do menu móvel e na barra de secções do telemóvel.
+ */
+export const sectionNav: readonly NavItem[] = [
+  { label: "Início", href: "/#inicio", sectionId: "inicio" },
+  { label: "O desafio", href: "/#desafio", sectionId: "desafio" },
+  { label: "A Plataforma", href: "/#plataforma", sectionId: "plataforma" },
+  { label: "As Quatro Dimensões", href: "/#dimensoes", sectionId: "dimensoes" },
+  { label: "Como Funciona", href: "/#como-funciona", sectionId: "como-funciona" },
+  { label: "Impacto", href: "/#impacto", sectionId: "impacto" },
+  { label: "Perguntas frequentes", href: "/#perguntas", sectionId: "perguntas" },
+];
+
 export const legalNav = [
-  { label: "Política de Privacidade", href: "/privacidade" },
-  { label: "Aviso Legal", href: "/aviso-legal" },
+  { label: "Política de Privacidade", shortLabel: "Privacidade", href: "/privacidade" },
+  { label: "Aviso Legal", shortLabel: "Aviso Legal", href: "/aviso-legal" },
 ] as const;

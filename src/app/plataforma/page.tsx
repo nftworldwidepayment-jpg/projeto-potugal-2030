@@ -81,9 +81,9 @@ export default function PlataformaPage() {
           </Lead>
         </div>
 
-        <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4">
+        <ol className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">
           {journeySteps.map((step, i) => (
-            <li key={step.id} className="flex flex-col bg-white p-7">
+            <li key={step.id} className="flex flex-col bg-white p-5 sm:p-7">
               <div className="flex items-center gap-3">
                 <span
                   aria-hidden="true"
@@ -96,16 +96,21 @@ export default function PlataformaPage() {
                   {step.title}
                 </h3>
               </div>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-4 space-y-3 sm:mt-6">
                 {platformModules[step.id].map((module) => {
                   const Icon = moduleIcons[module.id] ?? ClipboardList;
                   return (
-                    <li key={module.id} className="rounded-xl border border-line bg-surface/60 p-4">
-                      <span className="flex size-9 items-center justify-center rounded-lg bg-white text-navy ring-1 ring-line">
+                    <li
+                      key={module.id}
+                      className="flex gap-3 rounded-xl border border-line bg-surface/60 p-4 lg:block"
+                    >
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-white text-navy ring-1 ring-line">
                         <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.75} />
                       </span>
-                      <h4 className="mt-4 text-[15px] font-semibold text-ink">{module.title}</h4>
-                      <p className="mt-1.5 text-sm leading-relaxed text-muted">{module.description}</p>
+                      <div className="min-w-0 lg:mt-4">
+                        <h4 className="text-[15px] font-semibold text-ink">{module.title}</h4>
+                        <p className="mt-1 text-sm leading-relaxed text-muted lg:mt-1.5">{module.description}</p>
+                      </div>
                     </li>
                   );
                 })}
@@ -116,13 +121,18 @@ export default function PlataformaPage() {
       </Section>
 
       <Section tone="surface" aria-labelledby="painel-title">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="grid gap-8 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-0">
           <div className="lg:col-span-5">
             <Eyebrow>Como ler o painel</Eyebrow>
             <SectionTitle id="painel-title" className="mt-6 lg:text-4xl">
               Três informações, de leitura imediata.
             </SectionTitle>
-            <ol className="mt-10 space-y-6">
+          </div>
+          <div className="lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1 lg:self-center">
+            <DashboardPreview assessment={demoAssessment} annotated />
+          </div>
+          <div className="lg:col-span-5">
+            <ol className="space-y-6 lg:mt-10">
               {readingGuide.map((item, i) => (
                 <li key={item.title} className="flex gap-4">
                   <span className="mt-0.5">
@@ -135,18 +145,15 @@ export default function PlataformaPage() {
                 </li>
               ))}
             </ol>
-            <p className="mt-10 text-sm leading-relaxed text-muted">
+            <p className="mt-8 text-sm leading-relaxed text-muted lg:mt-10">
               Exemplo demonstrativo, com dados fictícios. Não corresponde a uma empresa real nem a resultados da
               plataforma.
             </p>
           </div>
-          <div className="lg:col-span-7">
-            <DashboardPreview assessment={demoAssessment} annotated />
-          </div>
         </div>
       </Section>
 
-      <Container className="flex flex-col items-start justify-between gap-6 py-16 sm:flex-row sm:items-center">
+      <Container className="flex flex-col-reverse items-stretch justify-between gap-3 py-12 sm:flex-row sm:items-center sm:gap-6 sm:py-16">
         <ButtonLink href="/#inicio" variant="secondary">
           <ArrowLeft aria-hidden="true" className="size-4" />
           Voltar ao início
