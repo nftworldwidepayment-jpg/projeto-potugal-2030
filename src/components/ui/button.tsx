@@ -7,7 +7,7 @@ type Variant = "primary" | "secondary" | "inverse" | "inverse-outline";
 type Size = "md" | "lg";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap " +
+  "group inline-flex items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap [&>svg]:shrink-0 " +
   "transition-[background-color,color,box-shadow,scale] duration-200 ease-out active:scale-[0.98] " +
   "focus-visible:outline-2 focus-visible:outline-offset-2";
 
