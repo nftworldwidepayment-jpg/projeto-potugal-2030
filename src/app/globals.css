@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+/*
+ * PORTUGAL POTENTIAL 2030 — sistema de design
+ * Direção visual: minimalismo corporativo.
+ */
+
+@theme {
+  /* Marca */
+  --color-navy: #172c48;
+  --color-navy-hover: #1f3a5d;
+  --color-navy-deep: #10213a;
+  --color-steel: #345779;
+  --color-steel-soft: #8ea9c7;
+  --color-steel-pale: #c9d6e5;
+  --color-mist: #eaf0f6;
+
+  /* Superfícies e texto */
+  --color-surface: #f4f6f8;
+  --color-ink: #1d2939;
+  --color-muted: #667085;
+  --color-line: #e4e9ef;
+  --color-line-strong: #cfd8e3;
+  --color-on-navy: #b8c7d9;
+
+  /* Sombras discretas */
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.04);
+  --shadow-lift: 0 1px 2px rgb(16 24 40 / 0.04), 0 12px 32px -12px rgb(23 44 72 / 0.16);
+  --shadow-panel: 0 1px 2px rgb(16 24 40 / 0.05), 0 32px 64px -24px rgb(23 44 72 / 0.28);
+
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-grow: grow 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Compensa a altura do cabeçalho fixo nas âncoras. */
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Impede o scroll da página com o menu móvel aberto. */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    font-feature-settings: "cv11", "ss03";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-mist);
+    color: var(--color-navy);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-steel);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility bg-grid-inverse {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
