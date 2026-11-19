@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
-import { DocumentPlaceholder } from "@/components/layout/document-placeholder";
+import { DocumentPage } from "@/components/ui/document-page";
 
 export const metadata: Metadata = {
-  title: "Política de Privacidade",
+  title: "Privacidade",
 };
 
 export default function PrivacidadePage() {
   return (
-    <DocumentPlaceholder
-      title="Política de Privacidade"
-      description="Informação sobre o tratamento de dados pessoais no âmbito do PORTUGAL POTENTIAL 2030."
-    />
+    <DocumentPage title="Política de Privacidade">
+      <p>Documento em preparação. O texto definitivo será publicado antes do lançamento da plataforma.</p>
+      <p>
+        Nesta versão de demonstração, as respostas ao diagnóstico ficam guardadas apenas no armazenamento local deste
+        navegador. Não são enviadas para nenhum servidor e podem ser apagadas a qualquer momento no separador
+        Diagnóstico, com a opção Limpar respostas.
+      </p>
+      <p>Esta aplicação não utiliza cookies de análise nem de publicidade.</p>
+    </DocumentPage>
   );
 }

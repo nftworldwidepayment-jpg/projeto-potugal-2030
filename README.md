@@ -2,7 +2,7 @@
 
 **Transformar potencial em crescimento.**
 
-Website institucional da iniciativa PORTUGAL POTENTIAL 2030 — Fase 1: página inicial e base de arquitetura para a futura plataforma de diagnóstico empresarial.
+Protótipo da plataforma de diagnóstico do PORTUGAL POTENTIAL 2030: uma aplicação com dois separadores, Painel e Diagnóstico, para avaliar o potencial de crescimento de uma empresa em quatro dimensões.
 
 ## Tecnologia
 
@@ -22,68 +22,60 @@ npm run start    # servir o build
 npm run lint
 ```
 
-## Páginas
+## A aplicação
 
-| Rota | Conteúdo |
-|---|---|
-| `/` | Página inicial: Início, O desafio, A Plataforma, As Quatro Dimensões, Como Funciona, Impacto, Perguntas frequentes, chamada à ação |
-| `/plataforma` | Destino de "Explorar a Plataforma": o que a plataforma vai permitir fazer, passo a passo, e como ler o painel (em desenvolvimento) |
-| `/privacidade`, `/aviso-legal` | Documentos institucionais provisórios |
+Protótipo de software com dois separadores, no formato de uma aplicação (não é uma landing page):
 
-Todas as páginas são geradas estaticamente. Não há backend nem recolha de dados.
+| Separador | Rota | Conteúdo |
+|---|---|---|
+| **Painel** | `/` | Potencial realizado da empresa, resultado por dimensão, próximas ações (com o porquê de cada uma), plano de ação com estado editável, detalhe das 16 áreas e exportação do relatório (impressão ou PDF). |
+| **Diagnóstico** | `/diagnostico` | Perfil da empresa e 16 questões (4 por dimensão), numa escala de 1 a 5. O painel é recalculado a cada resposta. |
+
+Abre com uma empresa de demonstração (fictícia) para haver algo para explorar. O utilizador pode limpar os dados e fazer o diagnóstico da própria empresa, ou repor a demonstração.
+
+Também existem `/privacidade` e `/aviso-legal` (documentos provisórios) e a janela **Sobre**, com a descrição da iniciativa e a forma de cálculo.
+
+### Cálculo
+
+- Cada resposta (1 a 5) vale 0, 25, 50, 75 ou 100 pontos.
+- Dimensão: média das suas 4 áreas. Potencial realizado: média das 4 dimensões. Margem de crescimento: 100 menos o potencial realizado.
+- Cada área com resposta "Em parte" ou inferior gera uma ação recomendada; com "Não" ou "Pouco" a prioridade é alta (0 a 3 meses), caso contrário média (3 a 6 meses).
+
+O modelo está em `src/lib/model.ts`. Não há backend: os dados ficam no `localStorage` do navegador (`src/lib/assessment-store.ts`).
 
 ## Estrutura
 
 ```
 src/
-  app/                    rotas, layout, estilos globais e ícone
+  app/                  rotas (painel, diagnóstico, documentos), layout, ícones e manifesto
   components/
-    brand/                logótipo e símbolo dos quatro quadrantes
-    layout/               cabeçalho, menu móvel, rodapé, cabeçalhos de página
-    sections/             secções da página inicial
-    dashboard/            componentes do painel (reutilizáveis no painel real)
-    ui/                   botão, contentor, secção, etiqueta "Exemplo demonstrativo"
-  hooks/                  realce da secção ativa na navegação
+    app/                cabeçalho, separadores (topo e barra inferior no telemóvel), janela Sobre
+    painel/             resumo da empresa, dimensões, próximas ações, plano, detalhe por área
+    diagnostico/        passos, perfil, questões e escala de resposta
+    ui/                 botão, contentor, cartões
   lib/
-    site.ts               nome, tagline, navegação
-    dimensions.ts         as quatro dimensões e as suas áreas de análise
-    platform-modules.ts   etapas do percurso e módulos previstos
-    demo-assessment.ts    avaliação fictícia (apenas para a pré-visualização)
-  types/diagnostic.ts     modelo de domínio do diagnóstico
+    model.ts            dimensões, áreas, questões, ações, cálculo e dados de demonstração
+    assessment-store.ts estado partilhado e guardado no navegador
+  types/diagnostic.ts   tipos do domínio
 ```
 
-## Princípios de conteúdo
+## Princípios
 
-- **Simples e didático.** Cada secção responde a uma pergunta clara; cada dimensão é apresentada através de uma pergunta que o empresário reconhece; cada etapa indica o resultado que a empresa obtém.
-- **Só o essencial no painel.** Índice de oportunidade, potencial por dimensão e uma recomendação prioritária, com legendas em linguagem corrente. Nada que pareça clicável sem o ser.
-- Todo o texto visível em português europeu (Acordo Ortográfico de 1990).
-- Sem estatísticas, testemunhos, parceiros ou resultados inventados. Os números da secção "A Plataforma" (4 dimensões, 16 áreas, 4 etapas) são derivados do próprio conteúdo.
-- Qualquer visualização com dados fictícios usa `isDemo: true` e mostra a etiqueta **Exemplo demonstrativo**.
-- Os impactos são apresentados como resultados pretendidos, não comprovados.
+- Todo o texto visível em português europeu (Acordo Ortográfico de 1990), sem travessões.
+- Aspeto de software: cabeçalho de aplicação, separadores, cartões e dados. Sem hero, sem slogans, sem fundos decorativos.
+- Dados de demonstração sempre identificados como tal; resultados calculados de forma transparente.
 
 ## Experiência móvel
 
-Pensada primeiro para o telemóvel, sem alterar o desktop:
-
-- **Barra de secções** ao alcance do polegar (telemóvel e tablet): mostra a secção atual, o progresso de leitura e abre o índice de secções. Aparece depois do início e esconde-se no fim da página.
-- **Índice de secções** em ecrã inteiro, com a secção atual assinalada ("Está aqui").
-- **Quatro dimensões em carrossel** com deslize e paragem em cada cartão, mais um seletor A–D. A partir de 640 px volta a ser grelha.
-- **Blocos compactos** no telemóvel (desafio, impacto, perguntas, módulos da plataforma) para reduzir o scroll; o mais importante aparece primeiro.
-- **Áreas de toque de 44 px** em ecrãs táteis (detetadas pelo tipo de ponteiro, não pela largura), título do início com tamanho fluido.
-- **Ecrãs com entalhe** (`viewport-fit=cover` e áreas seguras), ícone para o ecrã principal e manifesto da aplicação.
-
-Verificado com Playwright a 320, 360, 390 e 414 px, em modo horizontal e em tablet: sem scroll horizontal e sem alvos de toque abaixo do mínimo.
+- Separadores numa barra inferior, ao alcance do polegar; índice do painel em destaque e centrado.
+- Respostas em lista vertical com áreas de toque largas; passos do diagnóstico numa faixa horizontal que acompanha o passo atual.
+- Áreas de toque de pelo menos 44 px, suporte a ecrãs com entalhe, ícone para o ecrã principal.
+- Verificado com Playwright a 320, 360, 390 e 414 px, em modo horizontal e em tablet: sem scroll horizontal.
 
 ## Próximas fases
 
-A arquitetura está preparada para os módulos previstos (ver `src/lib/platform-modules.ts`, com rotas reservadas em `/plataforma/*`):
+Já existem, nesta versão, o perfil da empresa, o questionário, o cálculo por dimensão, o painel, as recomendações, o plano de ação e o relatório (impressão). Para passar a produção faltam:
 
-1. Perfil empresarial e registo
-2. Questionário de diagnóstico
-3. Motor de avaliação das quatro dimensões
-4. Painel de potencial — reutiliza `components/dashboard/*` com dados reais
-5. Recomendações personalizadas
-6. Plano de ação
-7. Relatório exportável
-
-Antes de recolher quaisquer dados será necessário rever a Política de Privacidade e o Aviso Legal, e ponderar a introdução de shadcn/ui para formulários e componentes interativos mais complexos.
+- Contas de utilizador e armazenamento em servidor (hoje tudo fica no navegador).
+- Validação do questionário e do modelo de cálculo por especialistas.
+- Versões definitivas da Política de Privacidade e do Aviso Legal antes de recolher quaisquer dados.

@@ -1,15 +1,11 @@
 @import "tailwindcss";
 
-/*
- * PORTUGAL POTENTIAL 2030 — sistema de design
- * Direção visual: minimalismo corporativo.
- */
+/* PORTUGAL POTENTIAL 2030: tokens da aplicação. */
 
 @theme {
   /* Marca */
   --color-navy: #172c48;
   --color-navy-hover: #1f3a5d;
-  --color-navy-deep: #10213a;
   --color-steel: #345779;
   --color-steel-soft: #8ea9c7;
   --color-steel-pale: #c9d6e5;
@@ -21,45 +17,21 @@
   --color-muted: #667085;
   --color-line: #e4e9ef;
   --color-line-strong: #cfd8e3;
-  --color-on-navy: #b8c7d9;
 
   /* Sombras discretas */
   --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.04);
-  --shadow-lift: 0 1px 2px rgb(16 24 40 / 0.04), 0 12px 32px -12px rgb(23 44 72 / 0.16);
-  --shadow-panel: 0 1px 2px rgb(16 24 40 / 0.05), 0 32px 64px -24px rgb(23 44 72 / 0.28);
+  --shadow-panel: 0 1px 2px rgb(16 24 40 / 0.05), 0 24px 48px -16px rgb(23 44 72 / 0.24);
 
-  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-grow: grow 1s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-sheet: sheet 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  --animate-sheet: sheet 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 
   @keyframes sheet {
     from {
-      opacity: 0.6;
+      opacity: 0;
       transform: translateY(8px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
-    }
-  }
-
-  @keyframes grow {
-    from {
-      transform: scaleX(0);
-    }
-    to {
-      transform: scaleX(1);
     }
   }
 }
@@ -70,21 +42,17 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
-    /* Compensa a altura do cabeçalho fixo nas âncoras. */
-    scroll-padding-top: 5.5rem;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Impede o scroll da página com o menu móvel aberto. */
+  /* Impede o scroll da página com uma janela modal aberta. */
   html:has(dialog[open]) {
     overflow: hidden;
   }
 
   body {
-    @apply bg-white font-sans text-ink antialiased;
+    @apply font-sans text-ink antialiased;
     font-feature-settings: "cv11", "ss03";
-    text-rendering: optimizeLegibility;
   }
 
   ::selection {
@@ -94,14 +62,12 @@
 
   :focus-visible {
     outline: 2px solid var(--color-steel);
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline-offset: 2px;
   }
 
   h1,
   h2,
-  h3,
-  h4 {
+  h3 {
     text-wrap: balance;
   }
 
@@ -115,35 +81,26 @@
  * entalhe (iPhone em modo horizontal) graças a viewport-fit=cover.
  */
 :root {
-  --gutter: 1.25rem;
+  --gutter: 1rem;
   --safe-left: max(var(--gutter), env(safe-area-inset-left));
   --safe-right: max(var(--gutter), env(safe-area-inset-right));
 }
 
 @media (width >= 40rem) {
   :root {
-    --gutter: 2rem;
+    --gutter: 1.5rem;
   }
 }
 
 @media (width >= 64rem) {
   :root {
-    --gutter: 2.5rem;
+    --gutter: 2rem;
   }
 }
 
 @utility px-gutter {
   padding-left: var(--safe-left);
   padding-right: var(--safe-right);
-}
-
-/* Carrossel que ocupa toda a largura do ecrã, alinhado com a margem. */
-@utility carousel-bleed {
-  margin-left: calc(-1 * var(--safe-left));
-  margin-right: calc(-1 * var(--safe-right));
-  padding-left: var(--safe-left);
-  padding-right: var(--safe-right);
-  scroll-padding-inline: var(--safe-left) var(--safe-right);
 }
 
 @utility scrollbar-none {
@@ -154,32 +111,25 @@
 }
 
 @utility pb-safe {
-  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 @utility pt-safe {
   padding-top: env(safe-area-inset-top);
 }
 
-@utility bg-grid {
-  background-image:
-    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
+@media print {
+  @page {
+    margin: 14mm;
+  }
 
-@utility bg-grid-inverse {
-  background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
-  background-size: 56px 56px;
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   *,
   *::before,
   *::after {
