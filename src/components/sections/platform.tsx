@@ -25,6 +25,9 @@ export function Platform() {
               O PORTUGAL POTENTIAL 2030 propõe uma abordagem estruturada ao diagnóstico empresarial, cruzando
               diferentes dimensões da organização para identificar oportunidades concretas de desenvolvimento.
             </Lead>
+            <p className="mt-4 text-base leading-relaxed text-ink">
+              Em vez de olhar para cada área separadamente, o diagnóstico vê a empresa como um todo.
+            </p>
             <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-line-strong/70 pt-8">
               {facts.map((fact) => (
                 <div key={fact.label} className="flex flex-col-reverse justify-end gap-2">

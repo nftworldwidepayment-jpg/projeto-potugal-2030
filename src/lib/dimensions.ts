@@ -7,7 +7,7 @@ export const dimensions: readonly Dimension[] = [
     letter: "A",
     title: "Potencial dos Colaboradores",
     shortTitle: "Colaboradores",
-    summary: "As pessoas, as suas competências e a forma como o trabalho está organizado.",
+    question: "As competências da equipa estão a ser bem aproveitadas?",
     focusAreas: ["Competências", "Talento subaproveitado", "Organização", "Produtividade"],
   },
   {
@@ -15,7 +15,7 @@ export const dimensions: readonly Dimension[] = [
     letter: "B",
     title: "Potencial Operacional",
     shortTitle: "Operacional",
-    summary: "Os processos, os recursos e a eficiência com que a empresa opera.",
+    question: "Os processos funcionam de forma eficiente e sem desperdício?",
     focusAreas: ["Processos", "Ineficiências", "Estrutura de custos", "Automatização"],
   },
   {
@@ -23,7 +23,7 @@ export const dimensions: readonly Dimension[] = [
     letter: "C",
     title: "Potencial Financeiro",
     shortTitle: "Financeiro",
-    summary: "A rentabilidade, a solidez financeira e a capacidade de investir.",
+    question: "Os recursos financeiros estão a gerar todo o retorno possível?",
     focusAreas: [
       "Rentabilidade",
       "Capacidade de investimento",
@@ -36,7 +36,7 @@ export const dimensions: readonly Dimension[] = [
     letter: "D",
     title: "Potencial Estratégico",
     shortTitle: "Estratégico",
-    summary: "O posicionamento, a capacidade de inovar e as opções de crescimento.",
+    question: "A empresa está preparada para inovar e chegar a novos mercados?",
     focusAreas: ["Inovação", "Posicionamento", "Internacionalização", "Crescimento"],
   },
 ];

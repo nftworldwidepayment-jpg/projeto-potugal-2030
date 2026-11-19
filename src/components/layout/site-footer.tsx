@@ -31,6 +31,11 @@ export function SiteFooter() {
                 </li>
               ))}
               <li>
+                <Link href="/#perguntas" className={linkClass}>
+                  Perguntas frequentes
+                </Link>
+              </li>
+              <li>
                 <Link href={platformHref} className={linkClass}>
                   Explorar a Plataforma
                 </Link>

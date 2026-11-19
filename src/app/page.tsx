@@ -1,5 +1,6 @@
 import { Challenge } from "@/components/sections/challenge";
 import { Dimensions } from "@/components/sections/dimensions";
+import { Faq } from "@/components/sections/faq";
 import { FinalCta } from "@/components/sections/final-cta";
 import { Hero } from "@/components/sections/hero";
 import { Impact } from "@/components/sections/impact";
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Dimensions />
       <Process />
       <Impact />
+      <Faq />
       <FinalCta />
     </>
   );

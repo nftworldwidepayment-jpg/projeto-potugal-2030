@@ -26,8 +26,8 @@ npm run lint
 
 | Rota | Conteúdo |
 |---|---|
-| `/` | Página inicial: Início, O desafio, A Plataforma, As Quatro Dimensões, Como Funciona, Impacto, chamada à ação |
-| `/plataforma` | Destino de "Explorar a Plataforma": módulos previstos por etapa e pré-visualização do painel (em desenvolvimento) |
+| `/` | Página inicial: Início, O desafio, A Plataforma, As Quatro Dimensões, Como Funciona, Impacto, Perguntas frequentes, chamada à ação |
+| `/plataforma` | Destino de "Explorar a Plataforma": o que a plataforma vai permitir fazer, passo a passo, e como ler o painel (em desenvolvimento) |
 | `/privacidade`, `/aviso-legal` | Documentos institucionais provisórios |
 
 Todas as páginas são geradas estaticamente. Não há backend nem recolha de dados.
@@ -53,6 +53,9 @@ src/
 ```
 
 ## Princípios de conteúdo
+
+- **Simples e didático.** Cada secção responde a uma pergunta clara; cada dimensão é apresentada através de uma pergunta que o empresário reconhece; cada etapa indica o resultado que a empresa obtém.
+- **Só o essencial no painel.** Índice de oportunidade, potencial por dimensão e uma recomendação prioritária, com legendas em linguagem corrente. Nada que pareça clicável sem o ser.
 
 - Todo o texto visível em português europeu (Acordo Ortográfico de 1990).
 - Sem estatísticas, testemunhos, parceiros ou resultados inventados. Os números da secção "A Plataforma" (4 dimensões, 16 áreas, 4 etapas) são derivados do próprio conteúdo.

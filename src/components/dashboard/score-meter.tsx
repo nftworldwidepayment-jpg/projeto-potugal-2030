@@ -1,33 +1,35 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-/** Valor principal do painel (0–100) com barra de leitura. */
+/** Valor principal do painel (0–100), com barra de leitura e explicação curta. */
 export function ScoreMeter({
   label,
   value,
   qualifier,
-  caption,
+  explanation,
+  marker,
   className,
-  children,
 }: {
   label: string;
   value: number;
   qualifier: string;
-  caption?: string;
+  explanation: string;
+  marker?: ReactNode;
   className?: string;
-  /** Conteúdo complementar apresentado por baixo da barra. */
-  children?: ReactNode;
 }) {
   const clamped = Math.min(100, Math.max(0, value));
 
   return (
     <div className={cn("flex flex-col", className)}>
-      <p className="text-xs font-medium text-muted">{label}</p>
+      <div className="flex items-center gap-2">
+        {marker}
+        <p className="text-[13px] font-medium text-muted">{label}</p>
+      </div>
       <div className="mt-3 flex items-baseline gap-1.5">
         <span className="text-5xl leading-none font-semibold tracking-[-0.03em] text-navy">{clamped}</span>
-        <span className="text-sm font-medium text-muted">/100</span>
+        <span className="text-sm font-medium text-muted">em 100</span>
       </div>
-      <p className="mt-3 inline-flex w-fit items-center gap-1.5 rounded-md bg-mist px-2 py-1 text-[11px] font-semibold text-navy">
+      <p className="mt-3 inline-flex w-fit items-center gap-1.5 rounded-md bg-mist px-2 py-1 text-xs font-semibold text-navy">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-navy" />
         {qualifier}
       </p>
@@ -44,13 +46,7 @@ export function ScoreMeter({
           style={{ width: `${clamped}%` }}
         />
       </div>
-      <div aria-hidden="true" className="mt-1.5 flex justify-between text-[10px] text-muted tabular-nums">
-        <span>0</span>
-        <span>50</span>
-        <span>100</span>
-      </div>
-      {children}
-      {caption && <p className="mt-auto pt-4 text-[11px] leading-snug text-muted">{caption}</p>}
+      <p className="mt-4 text-xs leading-relaxed text-muted">{explanation}</p>
     </div>
   );
 }

@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
-import { ArrowLeft, BarChart3, ClipboardList, FileText, LayoutDashboard, Lightbulb, ListChecks, Building2, type LucideIcon } from "lucide-react";
+import {
+  ArrowLeft,
+  BarChart3,
+  Building2,
+  ClipboardList,
+  FileText,
+  LayoutDashboard,
+  Lightbulb,
+  ListChecks,
+  type LucideIcon,
+} from "lucide-react";
 import { DashboardPreview } from "@/components/dashboard/dashboard-preview";
+import { ReadingMarker } from "@/components/dashboard/reading-marker";
 import { PageHeader } from "@/components/layout/page-header";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -11,7 +22,7 @@ import { journeySteps, platformModules } from "@/lib/platform-modules";
 export const metadata: Metadata = {
   title: "A Plataforma",
   description:
-    "Os módulos previstos da plataforma de diagnóstico empresarial do PORTUGAL POTENTIAL 2030, atualmente em desenvolvimento.",
+    "Como vai funcionar a plataforma de diagnóstico empresarial do PORTUGAL POTENTIAL 2030, atualmente em desenvolvimento.",
 };
 
 const moduleIcons: Record<string, LucideIcon> = {
@@ -24,16 +35,31 @@ const moduleIcons: Record<string, LucideIcon> = {
   relatorio: FileText,
 };
 
+const readingGuide = [
+  {
+    title: "Índice de oportunidade",
+    text: "Um único número, de 0 a 100, que resume a margem de crescimento identificada. Quanto mais alto, mais potencial há por explorar.",
+  },
+  {
+    title: "Potencial por dimensão",
+    text: "Uma barra por dimensão. A parte escura mostra a situação atual; a parte clara mostra até onde a empresa pode chegar.",
+  },
+  {
+    title: "Recomendação prioritária",
+    text: "A ação por onde começar, de acordo com as margens de crescimento identificadas.",
+  },
+];
+
 export default function PlataformaPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Explorar a Plataforma"
-        title="Do diagnóstico integrado ao plano de ação."
+        eyebrow="A Plataforma"
+        title="Como vai funcionar a plataforma."
         description={
           <p>
-            A plataforma interativa de diagnóstico empresarial encontra-se em desenvolvimento. Apresentamos os
-            módulos previstos e a forma como se articulam ao longo do percurso de cada empresa.
+            A plataforma de diagnóstico está em desenvolvimento. Nesta página pode ver, passo a passo, o que vai
+            permitir fazer e como serão apresentados os resultados.
           </p>
         }
       >
@@ -45,30 +71,39 @@ export default function PlataformaPage() {
 
       <Section aria-labelledby="modulos-title">
         <div className="max-w-2xl">
-          <Eyebrow>Módulos previstos</Eyebrow>
+          <Eyebrow>Passo a passo</Eyebrow>
           <SectionTitle id="modulos-title" className="mt-6 lg:text-4xl">
-            Sete módulos, organizados em quatro etapas.
+            O que a plataforma vai permitir fazer.
           </SectionTitle>
+          <Lead className="mt-6">
+            As funcionalidades estão organizadas pelas quatro etapas do diagnóstico, pela ordem em que serão
+            usadas.
+          </Lead>
         </div>
 
         <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4">
-          {journeySteps.map((step) => (
+          {journeySteps.map((step, i) => (
             <li key={step.id} className="flex flex-col bg-white p-7">
-              <p className="text-xs font-semibold tracking-[0.16em] text-steel uppercase">Etapa {step.number}</p>
-              <h3 className="mt-2 text-lg font-semibold tracking-[-0.01em] text-navy">{step.title}</h3>
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex size-8 items-center justify-center rounded-full bg-navy text-sm font-semibold text-white"
+                >
+                  {i + 1}
+                </span>
+                <h3 className="text-lg font-semibold tracking-[-0.01em] text-navy">
+                  <span className="sr-only">Etapa {i + 1}: </span>
+                  {step.title}
+                </h3>
+              </div>
               <ul className="mt-6 space-y-3">
                 {platformModules[step.id].map((module) => {
                   const Icon = moduleIcons[module.id] ?? ClipboardList;
                   return (
                     <li key={module.id} className="rounded-xl border border-line bg-surface/60 p-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="flex size-9 items-center justify-center rounded-lg bg-white text-navy ring-1 ring-line">
-                          <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.75} />
-                        </span>
-                        <span className="rounded px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-muted uppercase ring-1 ring-line ring-inset">
-                          Previsto
-                        </span>
-                      </div>
+                      <span className="flex size-9 items-center justify-center rounded-lg bg-white text-navy ring-1 ring-line">
+                        <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.75} />
+                      </span>
                       <h4 className="mt-4 text-[15px] font-semibold text-ink">{module.title}</h4>
                       <p className="mt-1.5 text-sm leading-relaxed text-muted">{module.description}</p>
                     </li>
@@ -83,21 +118,30 @@ export default function PlataformaPage() {
       <Section tone="surface" aria-labelledby="painel-title">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <Eyebrow>Painel de potencial</Eyebrow>
+            <Eyebrow>Como ler o painel</Eyebrow>
             <SectionTitle id="painel-title" className="mt-6 lg:text-4xl">
-              Uma leitura clara, dimensão a dimensão.
+              Três informações, de leitura imediata.
             </SectionTitle>
-            <Lead className="mt-6">
-              O painel previsto reunirá o índice de oportunidade, o potencial identificado em cada dimensão, os
-              indicadores relevantes e as recomendações prioritárias.
-            </Lead>
-            <p className="mt-6 text-sm leading-relaxed text-muted">
-              A pré-visualização apresentada é um exemplo demonstrativo, com dados fictícios. Não corresponde a
-              uma empresa real nem a resultados da plataforma.
+            <ol className="mt-10 space-y-6">
+              {readingGuide.map((item, i) => (
+                <li key={item.title} className="flex gap-4">
+                  <span className="mt-0.5">
+                    <ReadingMarker n={i + 1} />
+                  </span>
+                  <div>
+                    <h3 className="text-base font-semibold text-navy">{item.title}</h3>
+                    <p className="mt-1 text-[15px] leading-relaxed text-muted">{item.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-10 text-sm leading-relaxed text-muted">
+              Exemplo demonstrativo, com dados fictícios. Não corresponde a uma empresa real nem a resultados da
+              plataforma.
             </p>
           </div>
           <div className="lg:col-span-7">
-            <DashboardPreview assessment={demoAssessment} />
+            <DashboardPreview assessment={demoAssessment} annotated />
           </div>
         </div>
       </Section>
@@ -108,11 +152,11 @@ export default function PlataformaPage() {
           Voltar ao início
         </ButtonLink>
         <div className="flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href="/#dimensoes" variant="secondary">
-            As Quatro Dimensões
+          <ButtonLink href="/#perguntas" variant="secondary">
+            Perguntas frequentes
           </ButtonLink>
-          <ButtonLink href="/#como-funciona" withArrow>
-            Como Funciona
+          <ButtonLink href="/#dimensoes" withArrow>
+            Conhecer as Quatro Dimensões
           </ButtonLink>
         </div>
       </Container>

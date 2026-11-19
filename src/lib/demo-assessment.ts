@@ -21,26 +21,6 @@ export const demoAssessment: Assessment = {
     { dimension: "financeiro", current: 66, potential: 79 },
     { dimension: "estrategico", current: 44, potential: 80 },
   ],
-  indicators: [
-    {
-      id: "produtividade",
-      label: "Volume de negócios por colaborador",
-      value: "82,4 mil €",
-      trend: [71, 72, 70, 73, 74, 73, 75, 77, 76, 78, 80, 82],
-    },
-    {
-      id: "margem",
-      label: "Margem operacional",
-      value: "9,6%",
-      trend: [8.1, 8.4, 8.2, 8.6, 8.5, 8.9, 9.0, 8.8, 9.2, 9.1, 9.4, 9.6],
-    },
-    {
-      id: "digitalizacao",
-      label: "Processos digitalizados",
-      value: "38%",
-      trend: [24, 25, 25, 27, 28, 30, 30, 32, 33, 35, 36, 38],
-    },
-  ],
   recommendations: [
     {
       id: "mercados",

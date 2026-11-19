@@ -17,7 +17,8 @@ export interface Dimension {
   title: string;
   /** Nome curto para gráficos e etiquetas, p. ex. "Colaboradores". */
   shortTitle: string;
-  summary: string;
+  /** Pergunta simples que resume o que a dimensão avalia. */
+  question: string;
   focusAreas: readonly string[];
 }
 
@@ -60,7 +61,7 @@ export interface Assessment {
   opportunityIndex: number;
   opportunityLabel: string;
   scores: readonly DimensionScore[];
-  indicators: readonly Indicator[];
+  indicators?: readonly Indicator[];
   recommendations: readonly Recommendation[];
   /**
    * Verdadeiro para dados fictícios usados em demonstrações.

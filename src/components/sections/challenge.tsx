@@ -55,7 +55,7 @@ export function Challenge() {
         </div>
 
         <ul className="grid gap-px self-start overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:col-span-7">
-          {challenges.map((challenge, i) => {
+          {challenges.map((challenge) => {
             const Icon = challenge.icon;
             const dimension = getDimension(challenge.dimension);
             return (
@@ -63,17 +63,14 @@ export function Challenge() {
                 key={challenge.title}
                 className="group flex flex-col bg-white p-7 transition-colors duration-300 hover:bg-surface/70 sm:p-8"
               >
-                <div className="flex items-center justify-between">
-                  <span className="flex size-11 items-center justify-center rounded-xl bg-mist text-navy">
-                    <Icon aria-hidden="true" className="size-5" strokeWidth={1.75} />
-                  </span>
-                  <span className="text-sm font-medium text-steel-soft tabular-nums">0{i + 1}</span>
-                </div>
+                <span className="flex size-11 items-center justify-center rounded-xl bg-mist text-navy">
+                  <Icon aria-hidden="true" className="size-5" strokeWidth={1.75} />
+                </span>
                 <h3 className="mt-8 text-lg font-semibold tracking-[-0.01em] text-ink">{challenge.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-muted">{challenge.description}</p>
                 <p className="mt-auto flex items-center gap-2 pt-8 text-xs font-medium text-steel">
                   <QuadrantGlyph active={getDimensionIndex(challenge.dimension)} className="size-3.5" />
-                  Dimensão {dimension.letter} · {dimension.shortTitle}
+                  Analisado na Dimensão {dimension.letter} · {dimension.shortTitle}
                 </p>
               </li>
             );

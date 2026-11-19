@@ -16,12 +16,12 @@ export function Dimensions() {
           <div className="max-w-2xl">
             <Eyebrow>As Quatro Dimensões</Eyebrow>
             <SectionTitle id="dimensoes-title" className="mt-6 lg:text-4xl">
-              Quatro perspetivas sobre a empresa. Um único diagnóstico.
+              Quatro perguntas simples sobre a sua empresa.
             </SectionTitle>
           </div>
           <p className="max-w-md text-base leading-relaxed text-muted">
-            Cada dimensão analisa uma área determinante da organização. Em conjunto, revelam onde está o
-            potencial de crescimento.
+            Cada dimensão responde a uma pergunta essencial. Em conjunto, mostram onde está o potencial de
+            crescimento.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export function Dimensions() {
             const Icon = dimensionIcons[dimension.id];
             return (
               <li key={dimension.id}>
-                <article className="group flex h-full flex-col rounded-2xl border border-line bg-white p-7 shadow-card transition-[box-shadow,border-color,translate] duration-300 ease-out hover:-translate-y-0.5 hover:border-line-strong hover:shadow-lift">
+                <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-7 shadow-card transition-[box-shadow,border-color,translate] duration-300 ease-out hover:-translate-y-0.5 hover:border-line-strong hover:shadow-lift">
                   <div className="flex items-start justify-between">
                     <span className="flex size-12 items-center justify-center rounded-xl bg-navy text-white">
                       <Icon aria-hidden="true" className="size-[22px]" strokeWidth={1.75} />
@@ -44,16 +44,21 @@ export function Dimensions() {
                   <h3 className="mt-2 text-xl leading-snug font-semibold tracking-[-0.015em] text-navy">
                     {dimension.title}
                   </h3>
-                  <p className="mt-3 mb-8 text-[15px] leading-relaxed text-muted">{dimension.summary}</p>
+                  <p className="mt-4 mb-8 border-l-2 border-steel-soft pl-4 text-base leading-relaxed text-ink">
+                    {dimension.question}
+                  </p>
 
-                  <ul className="mt-auto space-y-3 border-t border-line pt-6">
-                    {dimension.focusAreas.map((area) => (
-                      <li key={area} className="flex items-center gap-3 text-sm font-medium text-ink">
-                        <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-steel-soft" />
-                        {area}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mt-auto border-t border-line pt-6">
+                    <p className="text-xs font-semibold text-muted">O que é analisado</p>
+                    <ul className="mt-3 space-y-2.5">
+                      {dimension.focusAreas.map((area) => (
+                        <li key={area} className="flex items-center gap-3 text-sm text-ink">
+                          <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-steel-soft" />
+                          {area}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </article>
               </li>
             );

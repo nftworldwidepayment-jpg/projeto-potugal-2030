@@ -20,6 +20,8 @@ export interface JourneyStep {
   number: string;
   title: string;
   description: string;
+  /** O que a empresa obtém no final da etapa. */
+  outcome: string;
 }
 
 export const journeySteps: readonly JourneyStep[] = [
@@ -28,24 +30,28 @@ export const journeySteps: readonly JourneyStep[] = [
     number: "01",
     title: "Conhecer",
     description: "Recolher informação relevante sobre a realidade da empresa.",
+    outcome: "Um retrato claro da empresa.",
   },
   {
     id: "diagnosticar",
     number: "02",
     title: "Diagnosticar",
     description: "Avaliar as quatro dimensões e identificar áreas com potencial de melhoria.",
+    outcome: "Uma leitura do potencial em cada dimensão.",
   },
   {
     id: "identificar",
     number: "03",
     title: "Identificar oportunidades",
     description: "Transformar os resultados do diagnóstico em oportunidades concretas.",
+    outcome: "Uma lista de oportunidades, por ordem de prioridade.",
   },
   {
     id: "agir",
     number: "04",
     title: "Agir e crescer",
     description: "Definir prioridades e estruturar um plano de ação adaptado à empresa.",
+    outcome: "Um plano de ação concreto, pronto a aplicar.",
   },
 ];
 
