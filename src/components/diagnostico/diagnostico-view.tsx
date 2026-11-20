@@ -2,11 +2,19 @@
 
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, RotateCcw, Trash2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { buttonClasses } from "@/components/ui/button";
 import { Card, ScoreBar } from "@/components/ui/card";
 import { ScoreRing } from "@/components/painel/score-ring";
-import { assessmentActions, setStep, useAssessment, useStep, type StepId } from "@/lib/assessment-store";
+import { toast } from "@/components/ui/toast";
+import {
+  assessmentActions,
+  currentAssessment,
+  setStep,
+  useAssessment,
+  useStep,
+  type StepId,
+} from "@/lib/assessment-store";
 import { companySizes, dimensions, levelFor, sectors, summarize, totalQuestions } from "@/lib/model";
 import { cn } from "@/lib/utils";
 import type { AssessmentState } from "@/types/diagnostic";
@@ -45,7 +53,6 @@ export function DiagnosticoView() {
   const step = useStep();
   const topRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLOListElement>(null);
-  const [confirmClear, setConfirmClear] = useState(false);
 
   // Na faixa horizontal (telemóvel e tablet), mantém o passo atual visível.
   useEffect(() => {
@@ -152,7 +159,7 @@ export function DiagnosticoView() {
             ))}
           </ul>
           <Link
-            href="/"
+            href="/empresa"
             className="mt-4 inline-flex min-h-9 items-center gap-1 text-sm font-medium text-steel hover:text-navy"
           >
             Abrir o painel
@@ -181,7 +188,7 @@ export function DiagnosticoView() {
                 <ArrowRight aria-hidden="true" className="size-4" />
               </button>
             ) : (
-              <Link href="/" className={buttonClasses({})}>
+              <Link href="/empresa" className={buttonClasses({})}>
                 Ver resultados
                 <ArrowRight aria-hidden="true" className="size-4" />
               </Link>
@@ -192,49 +199,35 @@ export function DiagnosticoView() {
         <div className="flex flex-wrap items-center justify-between gap-3 px-1 text-xs text-muted">
           <p>As respostas ficam guardadas apenas neste navegador.</p>
           <div className="flex items-center gap-1">
-            {confirmClear ? (
-              <>
-                <span className="mr-1">Apagar todas as respostas?</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    assessmentActions.clear();
-                    setConfirmClear(false);
-                    goTo("perfil");
-                  }}
-                  className="inline-flex min-h-9 items-center rounded-lg px-2.5 font-medium text-navy ring-1 ring-line ring-inset hover:bg-white"
-                >
-                  Apagar
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setConfirmClear(false)}
-                  className="inline-flex min-h-9 items-center rounded-lg px-2.5 font-medium hover:text-navy"
-                >
-                  Cancelar
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={() => setConfirmClear(true)}
-                  className="inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 font-medium hover:bg-white hover:text-navy"
-                >
-                  <Trash2 aria-hidden="true" className="size-3.5" />
-                  Limpar respostas
-                </button>
-                {!state.isDemo && (
-                  <button
-                    type="button"
-                    onClick={() => assessmentActions.resetDemo()}
-                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 font-medium hover:bg-white hover:text-navy"
-                  >
-                    <RotateCcw aria-hidden="true" className="size-3.5" />
-                    Repor demonstração
-                  </button>
-                )}
-              </>
+            <button
+              type="button"
+              onClick={() => {
+                const previous = currentAssessment();
+                assessmentActions.clear();
+                goTo("perfil");
+                toast("Respostas apagadas.", { label: "Anular", onClick: () => assessmentActions.restore(previous) });
+              }}
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 font-medium hover:bg-white hover:text-navy"
+            >
+              <Trash2 aria-hidden="true" className="size-3.5" />
+              Limpar respostas
+            </button>
+            {!state.isDemo && (
+              <button
+                type="button"
+                onClick={() => {
+                  const previous = currentAssessment();
+                  assessmentActions.resetDemo();
+                  toast("Dados de demonstração repostos.", {
+                    label: "Anular",
+                    onClick: () => assessmentActions.restore(previous),
+                  });
+                }}
+                className="inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2.5 font-medium hover:bg-white hover:text-navy"
+              >
+                <RotateCcw aria-hidden="true" className="size-3.5" />
+                Repor demonstração
+              </button>
             )}
           </div>
         </div>

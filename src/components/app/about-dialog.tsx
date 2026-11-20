@@ -2,11 +2,15 @@
 
 import { X } from "lucide-react";
 import type { Ref } from "react";
+import { buttonClasses } from "@/components/ui/button";
 import { dimensions } from "@/lib/model";
+import { portfolioStats } from "@/lib/portfolio";
+import { prefsActions } from "@/lib/prefs-store";
 import { siteConfig } from "@/lib/site";
+import type { Role } from "@/types/diagnostic";
 
 /** Informação sobre a iniciativa e sobre a forma de cálculo. */
-export function AboutDialog({ ref }: { ref: Ref<HTMLDialogElement> }) {
+export function AboutDialog({ ref, role }: { ref: Ref<HTMLDialogElement>; role: Role | null }) {
   return (
     <dialog
       ref={ref}
@@ -69,8 +73,24 @@ export function AboutDialog({ ref }: { ref: Ref<HTMLDialogElement> }) {
             Protótipo de demonstração. As respostas ficam guardadas apenas neste navegador e não são enviadas para
             nenhum servidor. Os dados de demonstração são fictícios e não representam uma empresa real.
           </p>
+          <p className="mt-2">
+            A carteira da entidade gestora tem {portfolioStats.companies} empresas fictícias, com nomes inventados e
+            respostas geradas para demonstração.
+          </p>
         </section>
       </div>
+
+      {role && (
+        <form method="dialog" className="flex justify-end border-t border-line px-5 py-3 sm:px-6">
+          <button
+            type="submit"
+            onClick={() => prefsActions.resetGuide(role)}
+            className={buttonClasses({ variant: "secondary" })}
+          >
+            Ver o guia rápido
+          </button>
+        </form>
+      )}
     </dialog>
   );
 }

@@ -1,8 +1,10 @@
 "use client";
 
 import { Check, ChevronDown, Plus } from "lucide-react";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Card, CardHeader, Chip } from "@/components/ui/card";
+import { InfoTooltip } from "@/components/ui/info-tooltip";
+import { toast } from "@/components/ui/toast";
 import { assessmentActions } from "@/lib/assessment-store";
 import { answerLabel } from "@/lib/model";
 import type { PlanItem, Recommendation } from "@/types/diagnostic";
@@ -12,19 +14,31 @@ const INITIAL = 5;
 export function NextActions({
   recommendations,
   plan,
+  readOnly = false,
 }: {
   recommendations: Recommendation[];
   plan: readonly PlanItem[];
+  /** Sem botões de edição (vista da entidade gestora). */
+  readOnly?: boolean;
 }) {
   const [showAll, setShowAll] = useState(false);
+  const titleId = useId();
   const visible = showAll ? recommendations : recommendations.slice(0, INITIAL);
   const inPlan = new Set(plan.map((item) => item.areaId));
 
   return (
-    <Card aria-labelledby="acoes-titulo">
+    <Card aria-labelledby={titleId}>
       <CardHeader
-        id="acoes-titulo"
-        title="Próximas ações"
+        id={titleId}
+        title={
+          <span className="inline-flex items-center gap-1.5">
+            Próximas ações
+            <InfoTooltip
+              label="Próximas ações"
+              text="Uma ação por cada área respondida com Em parte ou menos. Prioridade alta para Não ou Pouco (0 a 3 meses); média para Em parte (3 a 6 meses)."
+            />
+          </span>
+        }
         description="Ordenadas da área mais fraca para a mais forte."
         action={<span className="text-xs text-muted tabular-nums">{recommendations.length} ações</span>}
       />
@@ -69,7 +83,15 @@ export function NextActions({
                   </div>
 
                   <div className="shrink-0 print:hidden">
-                    {added ? (
+                    {readOnly ? (
+                      added && (
+                        <span className="inline-flex min-h-9 items-center gap-1 rounded-lg px-2 text-xs font-medium text-steel">
+                          <Check aria-hidden="true" className="size-4" />
+                          <span className="hidden sm:inline">No plano</span>
+                          <span className="sr-only sm:hidden">No plano</span>
+                        </span>
+                      )
+                    ) : added ? (
                       <span className="inline-flex min-h-9 items-center gap-1 rounded-lg px-2 text-xs font-medium text-steel">
                         <Check aria-hidden="true" className="size-4" />
                         <span className="hidden sm:inline">No plano</span>
@@ -78,7 +100,13 @@ export function NextActions({
                     ) : (
                       <button
                         type="button"
-                        onClick={() => assessmentActions.addToPlan(rec.area.id)}
+                        onClick={() => {
+                          assessmentActions.addToPlan(rec.area.id);
+                          toast("Ação adicionada ao plano.", {
+                            label: "Anular",
+                            onClick: () => assessmentActions.removeFromPlan(rec.area.id),
+                          });
+                        }}
                         className="inline-flex min-h-9 items-center gap-1 rounded-lg px-2.5 text-xs font-medium text-navy ring-1 ring-line transition-colors ring-inset hover:bg-surface active:scale-95"
                       >
                         <Plus aria-hidden="true" className="size-4" />

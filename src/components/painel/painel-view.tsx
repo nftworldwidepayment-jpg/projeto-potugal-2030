@@ -2,18 +2,19 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ClipboardList } from "lucide-react";
-import { useSyncExternalStore } from "react";
+import { ClipboardList, FileDown, FileSpreadsheet, PencilLine } from "lucide-react";
 import { buttonClasses } from "@/components/ui/button";
-import { assessmentActions, setStep, useAssessment } from "@/lib/assessment-store";
+import { toast } from "@/components/ui/toast";
+import { assessmentActions, currentAssessment, setStep, useAssessment } from "@/lib/assessment-store";
 import { recommendationsFor, summarize } from "@/lib/model";
-import { siteConfig } from "@/lib/site";
-import { ActionPlan } from "./action-plan";
+import { ActionPlan, exportPlanCsv } from "./action-plan";
 import { AreaDetail } from "./area-detail";
 import { CompanySummary } from "./company-summary";
 import { DimensionCards } from "./dimension-cards";
 import { NextActions } from "./next-actions";
+import { PrintHeader } from "./print-header";
 
+/** Separador Painel do perfil Empresa. */
 export function PainelView() {
   const state = useAssessment();
   const router = useRouter();
@@ -21,9 +22,14 @@ export function PainelView() {
   const recommendations = recommendationsFor(state.answers);
 
   const startOwn = () => {
+    const previous = currentAssessment();
     assessmentActions.clear();
     setStep("perfil");
-    router.push("/diagnostico");
+    router.push("/empresa/diagnostico");
+    toast("Dados de demonstração apagados. Comece pelo perfil da empresa.", {
+      label: "Anular",
+      onClick: () => assessmentActions.restore(previous),
+    });
   };
 
   if (summary.answered === 0) {
@@ -37,12 +43,15 @@ export function PainelView() {
           Responda às 16 questões do diagnóstico. O painel é calculado à medida que responde.
         </p>
         <div className="mt-6 flex flex-col justify-center gap-2 sm:flex-row">
-          <Link href="/diagnostico" className={buttonClasses({ variant: "primary" })}>
+          <Link href="/empresa/diagnostico" className={buttonClasses({ variant: "primary" })}>
             Começar o diagnóstico
           </Link>
           <button
             type="button"
-            onClick={() => assessmentActions.resetDemo()}
+            onClick={() => {
+              assessmentActions.resetDemo();
+              toast("Dados de demonstração repostos.");
+            }}
             className={buttonClasses({ variant: "secondary" })}
           >
             Ver dados de demonstração
@@ -52,17 +61,11 @@ export function PainelView() {
     );
   }
 
+  const companyName = state.profile.name || "empresa";
+
   return (
     <div className="space-y-4 sm:space-y-5">
-      {/* Cabeçalho do relatório impresso */}
-      <div className="hidden border-b border-line-strong pb-4 print:block">
-        <p className="text-xs font-semibold text-steel">{siteConfig.name}</p>
-        <p className="mt-1 text-lg font-semibold text-navy">Relatório de diagnóstico</p>
-        <p className="text-xs text-muted">
-          Emitido a <PrintDate />
-          {state.isDemo && " · Dados de demonstração (empresa fictícia)"}
-        </p>
-      </div>
+      <PrintHeader note={state.isDemo ? "Dados de demonstração (empresa fictícia)" : undefined} />
 
       {state.isDemo && (
         <div className="flex flex-col gap-3 rounded-xl border border-steel-pale bg-mist px-4 py-3 text-sm text-navy sm:flex-row sm:items-center sm:justify-between print:hidden">
@@ -80,31 +83,55 @@ export function PainelView() {
         </div>
       )}
 
-      <CompanySummary state={state} summary={summary} />
-      <DimensionCards results={summary.dimensions} />
+      <CompanySummary
+        profile={state.profile}
+        summary={summary}
+        planCount={state.plan.length}
+        actions={
+          <>
+            <Link
+              href="/empresa/diagnostico"
+              className={buttonClasses({ variant: "secondary", className: "flex-1 sm:flex-none" })}
+            >
+              <PencilLine aria-hidden="true" className="size-4" />
+              Rever respostas
+            </Link>
+            <button
+              type="button"
+              onClick={() => exportPlanCsv(companyName, state.plan, state.answers)}
+              disabled={state.plan.length === 0}
+              className={buttonClasses({
+                variant: "secondary",
+                className: "flex-1 disabled:pointer-events-none disabled:opacity-40 sm:flex-none",
+              })}
+            >
+              <FileSpreadsheet aria-hidden="true" className="size-4" />
+              Plano em Excel
+            </button>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className={buttonClasses({ variant: "primary", className: "w-full sm:w-auto" })}
+            >
+              <FileDown aria-hidden="true" className="size-4" />
+              Exportar relatório
+            </button>
+          </>
+        }
+      />
+
+      <DimensionCards results={summary.dimensions} editable />
 
       <div className="grid gap-4 sm:gap-5 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <NextActions recommendations={recommendations} plan={state.plan} />
         </div>
         <div className="lg:col-span-5">
-          <ActionPlan plan={state.plan} answers={state.answers} />
+          <ActionPlan plan={state.plan} answers={state.answers} companyName={companyName} />
         </div>
       </div>
 
       <AreaDetail answers={state.answers} />
     </div>
   );
-}
-
-const noopSubscribe = () => () => {};
-
-/** Data de hoje, calculada só no navegador (no momento de imprimir). */
-function PrintDate() {
-  const today = useSyncExternalStore(
-    noopSubscribe,
-    () => new Date().toLocaleDateString("pt-PT"),
-    () => "",
-  );
-  return <>{today}</>;
 }

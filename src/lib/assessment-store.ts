@@ -1,7 +1,14 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import type { ActionStatus, AnswerValue, AssessmentState, CompanyProfile, DimensionId } from "@/types/diagnostic";
+import type {
+  ActionStatus,
+  AnswerValue,
+  AssessmentState,
+  CompanyProfile,
+  DimensionId,
+  PlanItem,
+} from "@/types/diagnostic";
 import { demoState, emptyState } from "./model";
 
 /**
@@ -61,6 +68,12 @@ function getSnapshot() {
   return state;
 }
 
+/** Estado atual, fora do React (para guardar antes de uma ação a anular). */
+export function currentAssessment(): AssessmentState {
+  load();
+  return state;
+}
+
 function getServerSnapshot() {
   return demoState;
 }
@@ -86,6 +99,18 @@ export const assessmentActions = {
   removeFromPlan(areaId: string) {
     edit((s) => ({ plan: s.plan.filter((item) => item.areaId !== areaId) }));
   },
+  /** Repõe uma ação removida na posição original (para "Anular"). */
+  insertPlanItem(item: PlanItem, index: number) {
+    edit((s) => {
+      if (s.plan.some((p) => p.areaId === item.areaId)) return {};
+      const plan = [...s.plan];
+      plan.splice(Math.min(index, plan.length), 0, item);
+      return { plan };
+    });
+  },
+  updatePlanItem(areaId: string, patch: Partial<Omit<PlanItem, "areaId">>) {
+    edit((s) => ({ plan: s.plan.map((item) => (item.areaId === areaId ? { ...item, ...patch } : item)) }));
+  },
   setPlanStatus(areaId: string, status: ActionStatus) {
     edit((s) => ({ plan: s.plan.map((item) => (item.areaId === areaId ? { ...item, status } : item)) }));
   },
@@ -96,6 +121,11 @@ export const assessmentActions = {
   resetDemo() {
     load();
     commit(demoState);
+  },
+  /** Repõe um estado anterior completo (para "Anular"). */
+  restore(previous: AssessmentState) {
+    load();
+    commit(previous);
   },
 };
 

@@ -36,6 +36,11 @@ export type ActionStatus = "por-iniciar" | "em-curso" | "concluida";
 export interface PlanItem {
   areaId: string;
   status: ActionStatus;
+  /** Pessoa ou função responsável pela ação. */
+  owner?: string;
+  /** Data limite (AAAA-MM-DD). */
+  dueDate?: string;
+  notes?: string;
 }
 
 export type Answers = Partial<Record<string, AnswerValue>>;
@@ -51,6 +56,19 @@ export interface AssessmentState {
 }
 
 export type Priority = "alta" | "media";
+
+export type Role = "gestor" | "empresa";
+
+/** Empresa fictícia da carteira de demonstração (vista da entidade gestora). */
+export interface PortfolioCompany {
+  id: string;
+  profile: CompanyProfile;
+  region: string;
+  /** Data do diagnóstico (AAAA-MM-DD). */
+  assessedOn: string;
+  answers: Answers;
+  plan: readonly PlanItem[];
+}
 
 export interface Recommendation {
   area: Area;

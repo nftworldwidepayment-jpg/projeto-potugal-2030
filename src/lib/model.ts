@@ -198,6 +198,35 @@ export const companySizes = [
   "Grande empresa (250 ou mais colaboradores)",
 ] as const;
 
+/** Nomes curtos dos setores, para tabelas e para o mapa de calor. */
+export const sectorShort: Record<string, string> = {
+  "Indústria transformadora": "Indústria",
+  Comércio: "Comércio",
+  Construção: "Construção",
+  "Turismo e restauração": "Turismo",
+  "Tecnologias de informação e comunicação": "TIC",
+  "Transportes e logística": "Logística",
+  "Agricultura e agroalimentar": "Agroalimentar",
+  "Serviços às empresas": "Serviços",
+  "Saúde e ação social": "Saúde",
+  "Outro setor": "Outro",
+};
+
+/** Nome curto da dimensão da empresa, p. ex. "Pequena". */
+export function sizeShort(size: string): string {
+  return size.split(" ")[0] ?? size;
+}
+
+export const levels = [
+  { label: "Inicial", min: 0, max: 39 },
+  { label: "Em desenvolvimento", min: 40, max: 59 },
+  { label: "Consolidado", min: 60, max: 79 },
+  { label: "Avançado", min: 80, max: 100 },
+] as const;
+
+export const levelHelp =
+  "Inicial: menos de 40. Em desenvolvimento: 40 a 59. Consolidado: 60 a 79. Avançado: 80 ou mais.";
+
 export const statusLabels: Record<ActionStatus, string> = {
   "por-iniciar": "Por iniciar",
   "em-curso": "Em curso",
@@ -257,11 +286,15 @@ export function summarize(answers: Answers): Summary {
   };
 }
 
+export function levelIndex(score: number): number {
+  if (score < 40) return 0;
+  if (score < 60) return 1;
+  if (score < 80) return 2;
+  return 3;
+}
+
 export function levelFor(score: number): string {
-  if (score < 40) return "Inicial";
-  if (score < 60) return "Em desenvolvimento";
-  if (score < 80) return "Consolidado";
-  return "Avançado";
+  return levels[levelIndex(score)].label;
 }
 
 const timeframes: Record<Priority, string> = {
@@ -315,9 +348,25 @@ export const demoState: AssessmentState = {
     crescimento: 3,
   },
   plan: [
-    { areaId: "automatizacao", status: "em-curso" },
-    { areaId: "internacionalizacao", status: "por-iniciar" },
-    { areaId: "talento", status: "por-iniciar" },
+    {
+      areaId: "automatizacao",
+      status: "em-curso",
+      owner: "Direção de Operações",
+      dueDate: "2027-01-31",
+      notes: "Levantamento das tarefas de faturação e encomendas feito. Falta pedir propostas de software.",
+    },
+    {
+      areaId: "internacionalizacao",
+      status: "por-iniciar",
+      owner: "Direção Comercial",
+      dueDate: "2027-03-31",
+    },
+    {
+      areaId: "talento",
+      status: "por-iniciar",
+      owner: "Recursos Humanos",
+      dueDate: "2027-02-28",
+    },
   ],
 };
 
